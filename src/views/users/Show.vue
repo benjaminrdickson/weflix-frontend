@@ -5,7 +5,23 @@
     <p>username: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>
     <button v-on:click="displayEdit = !displayEdit">Edit Profile</button>
-    <button v-on:click="requestRelationship()">Relationship Request</button>
+    <button
+      v-if="
+        user.id != $parent.getUserId() && user.partner.id != $parent.getUserId()
+      "
+      v-on:click="requestRelationship()"
+    >
+      Relationship Request
+    </button>
+    <button
+      v-if="user.relationship && !user.relationship.confirmation"
+      v-on:click="updateRelationship()"
+    >
+      Confirm Relationship
+    </button>
+    <button v-if="user.relationship" v-on:click="destroyRelationship()">
+      End Relationship
+    </button>
     <form v-if="displayEdit" v-on:submit.prevent="updateUser()">
       <ul>
         <li class="error" v-for="error in errors" v-bind:key="error">
@@ -61,7 +77,6 @@ export default {
   created: function () {
     axios.get(`/users/${this.$route.params.id}`).then((response) => {
       console.log(response.data);
-      console.log("User object", response.data);
       this.user = response.data;
     });
   },
@@ -71,8 +86,6 @@ export default {
         .patch(`/users/${this.$route.params.id}`, this.editUserParams)
         .then((response) => {
           console.log(response.data);
-          this.$router.push(`/user/${response.data.id}`);
-          this.user = response.data;
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -86,10 +99,20 @@ export default {
       });
     },
     updateRelationship: function () {
-      var params = { recipient_id: this.user.id };
-      axios.patch("/relationships", params).then((response) => {
-        console.log(response.data);
-      });
+      axios
+        .patch(`/relationships/${this.user.relationship.id}`)
+        .then((response) => {
+          console.log(response.data);
+          this.user.relationship.confirmation = true;
+        });
+    },
+    destroyRelationship: function () {
+      axios
+        .delete(`/relationships/${this.user.relationship.id}`)
+        .then((response) => {
+          console.log(response.data);
+          this.$router.push(`/users/${this.$parent.getUserId()}`);
+        });
     },
   },
 };

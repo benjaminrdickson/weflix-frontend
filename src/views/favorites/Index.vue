@@ -1,6 +1,7 @@
 <template>
   <div class="favorites-index">
     <h1>Favorites</h1>
+    <p>partner: {{ currentUser.partner }}</p>
     <div v-for="favorite in favorites" v-bind:key="favorite.id">
       <h2>{{ favorite.movie.original_title }}</h2>
       <span class="image">
@@ -22,18 +23,19 @@ export default {
   data: function () {
     return {
       favorites: [],
+      currentUser: {},
     };
   },
   created: function () {
-    this.favoritesIndex();
+    axios.get("/favorites").then((response) => {
+      console.log("favorites index", response);
+      this.favorites = response.data;
+    });
+    axios.get(`/users/${this.$parent.getUserId()}`).then((response) => {
+      console.log(response.data);
+      this.currentUser = response.data;
+    });
   },
-  methods: {
-    favoritesIndex: function () {
-      axios.get("/favorites").then((response) => {
-        console.log("favorites index", response);
-        this.favorites = response.data;
-      });
-    },
-  },
+  methods: {},
 };
 </script>

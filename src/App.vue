@@ -20,7 +20,7 @@
         <router-link to="/login">Login</router-link>
       </span>
     </div>
-    <router-view />
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 
