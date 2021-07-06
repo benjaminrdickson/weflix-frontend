@@ -21,7 +21,11 @@
       </div>
       <div class="form-group">
         <label>Profile Picture:</label>
-        <input type="text" class="form-control" v-model="newUserParams.image" />
+        <input
+          type="text"
+          class="form-control"
+          v-model="newUserParams.image_url"
+        />
       </div>
       <div class="form-group">
         <label>Email:</label>
@@ -67,6 +71,7 @@ export default {
         .post("/users", this.newUserParams)
         .then((response) => {
           console.log(response.data);
+          this.$parent.flashMessage = "Successfully signed up!";
           this.$router.push("/login");
         })
         .catch((error) => {

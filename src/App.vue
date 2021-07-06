@@ -4,9 +4,13 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <span v-if="isLoggedIn()">
-        <router-link to="/users">Users</router-link>
+        <router-link to="/movies">Movies</router-link>
         |
-        <router-link to="/friends">My friends</router-link>
+        <router-link v-bind:to="`/users/${getUserId()}`"
+          >Profile Page</router-link
+        >
+        |
+        <router-link to="/favorites">Favorites</router-link>
         |
         <router-link to="/logout">Logout</router-link>
       </span>
