@@ -5,6 +5,7 @@
     <p>username: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>
     <button v-on:click="displayEdit = !displayEdit">Edit Profile</button>
+    <button v-on:click="requestRelationship()">Relationship Request</button>
     <form v-if="displayEdit" v-on:submit.prevent="updateUser()">
       <ul>
         <li class="error" v-for="error in errors" v-bind:key="error">
@@ -77,6 +78,18 @@ export default {
           this.errors = error.response.data.errors;
           console.log(error.response.data.errors);
         });
+    },
+    requestRelationship: function () {
+      var params = { recipient_id: this.user.id };
+      axios.post("/relationships", params).then((response) => {
+        console.log(response.data);
+      });
+    },
+    updateRelationship: function () {
+      var params = { recipient_id: this.user.id };
+      axios.patch("/relationships", params).then((response) => {
+        console.log(response.data);
+      });
     },
   },
 };
