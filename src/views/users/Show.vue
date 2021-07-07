@@ -1,6 +1,7 @@
 <template>
   <div class="users-show">
     <h1>{{ user.name }}'s Profile Page</h1>
+    <img :src="user.image_url" alt="" />
     <p>Name: {{ user.name }}</p>
     <p>username: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>

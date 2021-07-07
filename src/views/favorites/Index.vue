@@ -1,7 +1,10 @@
 <template>
   <div class="favorites-index">
     <h1>Favorites</h1>
-    <p>partner: {{ currentUser.partner }}</p>
+    <p>{{ currentUser.name }}</p>
+    <img :src="currentUser.image_url" alt="" />
+    <p>partner: {{ currentUser.partner.name }}</p>
+    <img :src="currentUser.partner.image_url" alt="" />
     <div v-for="favorite in favorites" v-bind:key="favorite.id">
       <h2>{{ favorite.movie.original_title }}</h2>
       <span class="image">

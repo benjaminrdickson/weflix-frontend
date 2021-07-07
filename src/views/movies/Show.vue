@@ -10,8 +10,8 @@
     </span>
     <p>Release Date {{ movie.release_date }}</p>
     <p>Overview {{ movie.overview }}</p>
-    <button>Dislike</button>
-    <button>Like</button>
+    <button v-on:click="disLike()">Dislike</button>
+    <button v-on:click="createLike()">Like</button>
   </div>
 </template>
 
@@ -29,11 +29,20 @@ export default {
       this.movie = response.data;
     });
   },
-  methods: {},
+  methods: {
+    createLike: function () {
+      var params = { api_movie_id: this.movie.id };
+      axios.post("/likes", params).then((response) => {
+        console.log(response.data);
+        this.$router.push("/movies/random");
+      });
+    },
+    disLike: function () {
+      axios.get("/movies/random").then((response) => {
+        console.log("movies show", response);
+        this.movie = response.data;
+      });
+    },
+  },
 };
 </script>
-
-<span class="image">
-<img v-bind:src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" v-bind:alt="movie.name" />
-<img :src="movie.poster_path" alt="" />
-</span>
