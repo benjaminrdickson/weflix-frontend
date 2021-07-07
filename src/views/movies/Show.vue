@@ -34,6 +34,7 @@ export default {
       var params = { api_movie_id: this.movie.id };
       axios.post("/likes", params).then((response) => {
         console.log(response.data);
+        // currently not regenerating a new movie after like
         this.$router.push("/movies/random");
       });
     },
