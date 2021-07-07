@@ -6,6 +6,7 @@
     <p>username: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>
     <button v-on:click="displayEdit = !displayEdit">Edit Profile</button>
+    <button v-on:click="destroyUser()">Delete Profile</button>
     <button
       v-if="
         user.id != $parent.getUserId() && user.partner.id != $parent.getUserId()
@@ -92,6 +93,23 @@ export default {
           this.errors = error.response.data.errors;
           console.log(error.response.data.errors);
         });
+    },
+    destroyUser: function () {
+      if (
+        confirm(
+          "Are you sure you want to delete your profile? All data will be lost."
+        )
+      ) {
+        axios
+          .delete(`/users/${this.$route.params.id}`)
+          .then((response) => {
+            console.log(response.data);
+            this.$router.push("/logout");
+          })
+          .catch((error) => {
+            this.errors = error.response.data.errors;
+          });
+      }
     },
     requestRelationship: function () {
       var params = { recipient_id: this.user.id };

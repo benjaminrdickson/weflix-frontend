@@ -44,14 +44,20 @@ export default {
   },
   methods: {
     deleteFavorite: function (favorite) {
-      axios.delete(`/favorites/${favorite.id}`).then((response) => {
-        console.log(response.data);
-        for (var i = 0; i < this.favorites.length; i++) {
-          if (this.favorites[i] === favorite) {
-            this.favorites.splice(i, 1);
+      if (
+        confirm(
+          "Are you sure you want to remove this movie from your watchlist?"
+        )
+      ) {
+        axios.delete(`/favorites/${favorite.id}`).then((response) => {
+          console.log(response.data);
+          for (var i = 0; i < this.favorites.length; i++) {
+            if (this.favorites[i] === favorite) {
+              this.favorites.splice(i, 1);
+            }
           }
-        }
-      });
+        });
+      }
     },
   },
 };
