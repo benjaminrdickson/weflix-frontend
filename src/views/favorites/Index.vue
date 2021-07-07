@@ -1,6 +1,6 @@
 <template>
   <div class="favorites-index">
-    <h1>Favorites</h1>
+    <h1>Our Watchlist</h1>
     <p>{{ currentUser.name }}</p>
     <img :src="currentUser.image_url" alt="" />
     <p>partner: {{ currentUser.partner.name }}</p>
@@ -16,6 +16,9 @@
       </span>
       <p>{{ favorite.movie.overview }}</p>
       <br />
+      <button v-on:click="deleteFavorite(favorite)">
+        Remove from Watchlist
+      </button>
     </div>
   </div>
 </template>
@@ -39,6 +42,17 @@ export default {
       this.currentUser = response.data;
     });
   },
-  methods: {},
+  methods: {
+    deleteFavorite: function (favorite) {
+      axios.delete(`/favorites/${favorite.id}`).then((response) => {
+        console.log(response.data);
+        for (var i = 0; i < this.favorites.length; i++) {
+          if (this.favorites[i] === favorite) {
+            this.favorites.splice(i, 1);
+          }
+        }
+      });
+    },
+  },
 };
 </script>

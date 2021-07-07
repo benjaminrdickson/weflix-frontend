@@ -21,6 +21,7 @@ export default {
   data: function () {
     return {
       movie: {},
+      user: {},
     };
   },
   created: function () {
@@ -28,14 +29,29 @@ export default {
       console.log("movies show", response);
       this.movie = response.data;
     });
+    // axios.get(`/users/${this.$parent.getUserId()}`).then((response) => {
+    //   console.log(response.data);
+    //   this.user = response.data;
+    //   console.log(this.user.likes);
+    // });
   },
   methods: {
     createLike: function () {
       var params = { api_movie_id: this.movie.id };
       axios.post("/likes", params).then((response) => {
         console.log(response.data);
-        // currently not regenerating a new movie after like
-        this.$router.push("/movies/random");
+      });
+      axios.get("/movies/random").then((response) => {
+        console.log("movies show", response);
+        this.movie = response.data;
+        // if (response.data === this.movie) {
+        //   axios.get("/movies/random").then((response) => {
+        //     console.log("movies show", response);
+        //     this.movie = response.data;
+        //   });
+        // } else {
+        //   this.movie = response.data;
+        // }
       });
     },
     disLike: function () {
