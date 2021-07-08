@@ -1,5 +1,10 @@
 <template>
   <div class="users-show">
+    <input type="text" v-model="searchTerm" placeholder="Find Username" />
+    <div
+      v-for="user in find(users, searchTerm, 'username')"
+      v-bind:key="user.id"
+    ></div>
     <h1>{{ user.name }}'s Profile Page</h1>
     <img :src="user.image_url" alt="" />
     <p>Name: {{ user.name }}</p>
@@ -67,13 +72,17 @@
 
 <script>
 import axios from "axios";
+import Vue2Filters from "vue2-filters";
 export default {
+  mixins: [Vue2Filters.mixin],
   data: function () {
     return {
       user: {},
       errors: [],
       editUserParams: {},
       displayEdit: false,
+      users: [],
+      searchTerm: "",
     };
   },
   created: function () {
