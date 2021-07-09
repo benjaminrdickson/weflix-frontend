@@ -86,7 +86,7 @@ export default {
     };
   },
   created: function () {
-    axios.get(`/users/${this.$route.params.id}`).then((response) => {
+    axios.get(`/users/${this.$route.params.username}`).then((response) => {
       console.log(response.data);
       this.user = response.data;
     });
@@ -97,6 +97,7 @@ export default {
         .patch(`/users/${this.$route.params.id}`, this.editUserParams)
         .then((response) => {
           console.log(response.data);
+          this.$parent.flashMessage = "User Updated!";
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -113,6 +114,7 @@ export default {
           .delete(`/users/${this.$route.params.id}`)
           .then((response) => {
             console.log(response.data);
+            this.$parent.flashMessage = "User Deleted!";
             this.$router.push("/logout");
           })
           .catch((error) => {
@@ -124,6 +126,7 @@ export default {
       var params = { recipient_id: this.user.id };
       axios.post("/relationships", params).then((response) => {
         console.log(response.data);
+        this.$parent.flashMessage = "Request Sent!";
       });
     },
     updateRelationship: function () {
@@ -132,6 +135,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.user.relationship.confirmation = true;
+          this.$parent.flashMessage = "Relationship Approved!";
         });
     },
     destroyRelationship: function () {
@@ -139,6 +143,7 @@ export default {
         .delete(`/relationships/${this.user.relationship.id}`)
         .then((response) => {
           console.log(response.data);
+          this.$parent.flashMessage = "Relationship Ended!";
           this.$router.push(`/users/${this.$parent.getUserId()}`);
         });
     },

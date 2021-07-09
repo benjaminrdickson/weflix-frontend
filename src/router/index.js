@@ -41,7 +41,7 @@ const routes = [
     component: Logout,
   },
   {
-    path: "/users/:id",
+    path: "/users/:username",
     name: "users-show",
     component: UsersShow,
   },

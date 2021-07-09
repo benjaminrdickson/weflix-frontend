@@ -51,6 +51,7 @@ export default {
       ) {
         axios.delete(`/favorites/${favorite.id}`).then((response) => {
           console.log(response.data);
+          this.$parent.flashMessage = "Movie Deleted from Watchlist!";
           for (var i = 0; i < this.favorites.length; i++) {
             if (this.favorites[i] === favorite) {
               this.favorites.splice(i, 1);

@@ -20,6 +20,10 @@
         <router-link to="/login">Login</router-link>
       </span>
     </div>
+    <div v-if="flashMessage">
+      {{ flashMessage }}
+      <button v-on:click="flashMessage = ''">Dismiss</button>
+    </div>
     <router-view :key="$route.fullPath" />
   </div>
 </template>
@@ -49,6 +53,11 @@
 
 <script>
 export default {
+  data: function () {
+    return {
+      flashMessage: "",
+    };
+  },
   methods: {
     isLoggedIn: function () {
       return localStorage.getItem("jwt");
@@ -56,6 +65,10 @@ export default {
     getUserId: function () {
       console.log(localStorage.getItem("user_id"));
       return localStorage.getItem("user_id");
+    },
+    getUserName: function () {
+      console.log(localStorage.getItem("username"));
+      return localStorage.getItem("username");
     },
   },
 };
