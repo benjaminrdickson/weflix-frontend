@@ -1,12 +1,93 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <!-- Start Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <router-link class="navbar-brand style2" to="/movies">
+        <img
+          src="https://st.depositphotos.com/1555678/1276/i/200/depositphotos_12766135-stock-photo-3d-cinema-clapper-film-reel.jpg"
+          alt="WeFlix"
+          style="max-width: 30%"
+        />
+        WeFlix
+      </router-link>
+      <button
+        class="navbar-toggler mobile-menu-btn"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse sub-menu-bar"
+        id="navbarSupportedContent"
+      >
+        <ul id="nav" class="navbar-nav ms-auto">
+          <li v-if="isLoggedIn()" class="nav-item">
+            <router-link
+              class="page-scroll active"
+              aria-label="Toggle navigation"
+              v-bind:to="`/users/${getUserName()}`"
+              >Profile Page</router-link
+            >
+            >
+          </li>
+
+          <li v-if="isLoggedIn()" class="nav-item">
+            <router-link
+              class="page-scroll active"
+              aria-label="Toggle navigation"
+              to="/favorites"
+              >Favorites</router-link
+            >
+            >
+          </li>
+          <li v-if="isLoggedIn()" class="nav-item">
+            <router-link
+              class="page-scroll active"
+              aria-label="Toggle navigation"
+              to="/logout"
+              >Logout</router-link
+            >
+            >
+          </li>
+
+          <li v-if="!isLoggedIn()" class="nav-item">
+            <router-link
+              class="page-scroll active"
+              aria-label="Toggle navigation"
+              to="/login"
+              >Login</router-link
+            >
+            >
+          </li>
+          <li v-if="!isLoggedIn()" class="nav-item">
+            <router-link
+              class="page-scroll active"
+              aria-label="Toggle navigation"
+              to="/signup"
+              >Sign Up</router-link
+            >
+            >
+          </li>
+        </ul>
+      </div>
+      <!-- navbar collapse -->
+    </nav>
+    <!-- End Navbar -->
+
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <span v-if="isLoggedIn()">
         <router-link to="/movies">Movies</router-link>
         |
-        <router-link v-bind:to="`/users/${getUserId()}`"
+        <router-link v-bind:to="`/users/${getUserName()}`"
           >Profile Page</router-link
         >
         |
@@ -19,7 +100,7 @@
         |
         <router-link to="/login">Login</router-link>
       </span>
-    </div>
+    </div> -->
     <div v-if="flashMessage">
       {{ flashMessage }}
       <button v-on:click="flashMessage = ''">Dismiss</button>
@@ -27,29 +108,6 @@
     <router-view :key="$route.fullPath" />
   </div>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
 
 <script>
 export default {
@@ -63,7 +121,6 @@ export default {
       return localStorage.getItem("jwt");
     },
     getUserId: function () {
-      console.log(localStorage.getItem("user_id"));
       return localStorage.getItem("user_id");
     },
     getUserName: function () {
