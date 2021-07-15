@@ -23,11 +23,9 @@
               <i>
                 <img :src="currentUser.image_url" alt="" />
               </i>
-              <h3>{{ currentUser.username }}</h3>
-              <p>
-                Appmeet is a completely creative, lightweight, clean & super
-                responsive app landing page.
-              </p>
+              <h3>{{ currentUser.name }}</h3>
+
+              <p>I speak fluent movie quotes.</p>
             </div>
             <!-- End Single Feature -->
           </div>
@@ -45,10 +43,7 @@
             <div class="single-feature wow fadeInUp" data-wow-delay=".6s">
               <i><img :src="currentUser.partner.image_url" alt="" /></i>
               <h3>{{ currentUser.partner.username }}</h3>
-              <p>
-                Appmeet is a completely creative, lightweight, clean & super
-                responsive app landing page.
-              </p>
+              <p>Lets crawl under a big blanket and watch movies.</p>
             </div>
             <!-- End Single Feature -->
           </div>
@@ -84,6 +79,7 @@
                     <h4 class="title">
                       {{ favorite.movie.original_title }}
                     </h4>
+                    <h5>{{ favorite.movie.genre }}</h5>
                     <p>
                       {{ favorite.movie.overview.slice(0, 100) + "..." }}
                     </p>

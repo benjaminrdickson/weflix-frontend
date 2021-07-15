@@ -37,6 +37,15 @@
             >
             >
           </li>
+          <li v-if="isLoggedIn()" class="nav-item">
+            <router-link
+              class="page-scroll active"
+              aria-label="Toggle navigation"
+              to="/movies"
+              >Browse Movies</router-link
+            >
+            >
+          </li>
 
           <li v-if="isLoggedIn()" class="nav-item">
             <router-link
@@ -101,11 +110,18 @@
         <router-link to="/login">Login</router-link>
       </span>
     </div> -->
-    <div v-if="flashMessage">
+    <div style="text-align: center" v-if="flashMessage">
       {{ flashMessage }}
-      <button v-on:click="flashMessage = ''">Dismiss</button>
+      <div class="button">
+        <button type="submit" class="btn" v-on:click="flashMessage = ''">
+          Dismiss
+        </button>
+      </div>
     </div>
     <router-view :key="$route.fullPath" />
+    <a href="#" class="scroll-top">
+      <i class="lni lni-chevron-up"></i>
+    </a>
   </div>
 </template>
 

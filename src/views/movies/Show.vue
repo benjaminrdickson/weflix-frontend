@@ -101,9 +101,12 @@ export default {
       var params = { api_movie_id: this.movie.id };
       axios.post("/likes", params).then((response) => {
         console.log(response.data);
-        // if (favorite.new) {
-        //   this.$parent.flashMessage = "Favorite created!";
-        // }
+        // if favorite is returned instead of a like.
+        if (response.data.relationship_id) {
+          this.$parent.flashMessage = "Favorite created!";
+          // Trying to make an audio alert for when a favorite is added.
+          // var alert = new Audio(require(audio/Ding.mp3)).play(alert);
+        }
       });
       axios.get("/movies/random").then((response) => {
         console.log("movies show", response);

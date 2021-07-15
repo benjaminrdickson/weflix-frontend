@@ -5,7 +5,7 @@
       <div class="container">
         <div class="content">
           <div class="row">
-            <div class="col-lg-8 col-md-12 col-12">
+            <div class="col-lg-5 col-md-12 col-12">
               <div class="thumb">
                 <img :src="user.image_url" :alt="user.username" />
               </div>

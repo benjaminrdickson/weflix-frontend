@@ -73,7 +73,7 @@ export default {
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
           localStorage.setItem("username", response.data.username);
-          this.$parent.flashMessage = "Successfully logged in!";
+          // this.$parent.flashMessage = "Welcome to WeFlix!";
           console.log(response.data.user_id);
           this.$router.push(`/users/${response.data.username}`);
         })

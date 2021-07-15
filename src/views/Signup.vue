@@ -138,7 +138,7 @@ export default {
         .post("/users", this.newUserParams)
         .then((response) => {
           console.log(response.data);
-          this.$parent.flashMessage = "Successfully signed up!";
+          this.$parent.flashMessage = "Account Created!";
           this.$router.push("/login");
         })
         .catch((error) => {
